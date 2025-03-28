@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import './UpdateStudent.css'
+import "./UpdateStudent.css";
 
 function UpdateStudent() {
   const [name, setName] = useState("");
@@ -9,12 +9,20 @@ function UpdateStudent() {
   const [dob, setDob] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
+  const departments = [
+    { value: "CSE", label: "Computer Science" },
+    { value: "IT", label: "Information Technology" },
+    { value: "MECH", label: "Mechanical" },
+    { value: "ECE", label: "Electronics & Communication" },
+    { value: "AI&ML", label: "Artificial Intelligence & Machine Learning" },
+    { value: "ROBO", label: "Robotics" },
+  ];
   useEffect(() => {
     axios
       .get("http://localhost:8004/getStudent/" + id)
       .then((res) => {
         console.log(res);
-          setName(res.data.name),
+        setName(res.data.name),
           setDepartment(res.data.department),
           setDob(res.data.dob);
       })
@@ -46,12 +54,18 @@ function UpdateStudent() {
           required
         />
         <label htmlFor="">Department</label>
-        <input
-          type="text"
+        <select
           value={department}
           onChange={(e) => setDepartment(e.target.value)}
           required
-        />
+        >
+          <option value="">Select Department</option>
+          {departments.map((dept) => (
+            <option key={dept.value} value={dept.value}>
+              {dept.label}
+            </option>
+          ))}
+        </select>
         <label htmlFor="">Date of Birth</label>
         <input
           type="date"

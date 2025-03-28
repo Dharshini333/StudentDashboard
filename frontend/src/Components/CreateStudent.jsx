@@ -9,7 +9,15 @@ function CreateStudent() {
   const [dob, setDob] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  
+  const departments = [
+    { value: "CSE", label: "Computer Science" },
+    { value: "IT", label: "Information Technology" },
+    { value: "MECH", label: "Mechanical" },
+    { value: "ECE", label: "Electronics & Communication" },
+    { value: "AI&ML", label: "Artificial Intelligence & Machine Learning" },
+    { value: "ROBO", label: "Robotics" },
+  ];
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name || !department || !dob) {
@@ -35,7 +43,7 @@ function CreateStudent() {
         }
       });
   };
-  
+
   return (
     <div className="main">
       <h2>ADD STUDENT</h2>
@@ -49,12 +57,18 @@ function CreateStudent() {
           required
         />
         <label htmlFor="">Department</label>
-        <input
-          type="text"
+        <select
           value={department}
           onChange={(e) => setDepartment(e.target.value)}
           required
-        />
+        >
+          <option value="">Select Department</option>
+          {departments.map((dept) => (
+            <option key={dept.value} value={dept.value}>
+              {dept.label}
+            </option>
+          ))}
+        </select>
         <label htmlFor="">Date of Birth</label>
         <input
           type="date"
