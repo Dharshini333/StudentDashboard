@@ -28,13 +28,23 @@ const students = mongoose.model("students", studentSchema);
 
 app.post("/create/student", async (req, res) => {
   try {
-    const data = req.body;
-    console.log("request body", req.body);
-    const newStud = new students(data);
+    const { name, department, dob } = req.body;
+
+    const existingStudent = await students.findOne({ name, department });
+    if (existingStudent) {
+      return res
+        .status(400)
+        .json({
+          error: "Student with this name and department already exists.",
+        });
+    }
+
+    const newStud = new students({ name, department, dob });
     await newStud.save();
     res.json({ message: "Added Successfully" });
   } catch (err) {
     console.log(err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
@@ -67,12 +77,13 @@ app.put("/updateStudent/:id", (req, res) => {
     .catch((err) => res.json(err));
 });
 
-app.delete('/delete/student/:id',(req,res)=>{
-    const id = req.params.id;
-    students.findByIdAndDelete({_id:id})
+app.delete("/delete/student/:id", (req, res) => {
+  const id = req.params.id;
+  students
+    .findByIdAndDelete({ _id: id })
     .then((stud) => res.json(stud))
     .catch((err) => res.json(err));
-})
+});
 
 app.listen(8004, () => {
   console.log("listenting on port 8004");

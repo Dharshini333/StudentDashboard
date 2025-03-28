@@ -1,0 +1,22 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(25, 53, 54);
+    height: 300px;
+    justify-content: space-around;
+}
+.container label{
+    font-size: 23px;
+    color:rgb(25, 53, 54);
+}
+.container input{
+    width: 200px;
+    height: 20px;
+}
+.container button{
+    background-color: rgb(97, 150, 204);
+    width: 100px;
+}
+.main h2{
+    font-size: 35px;
+}

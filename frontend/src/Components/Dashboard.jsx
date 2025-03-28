@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import './Dashboard.css'
 
 function Dashboard() {
   const [students, setStudents] = useState([]);
@@ -22,10 +23,10 @@ function Dashboard() {
       .catch((err) => console.log(err));
   };
   return (
-    <div>
+    <div className="main">
       <h1>Student Dashboard</h1>
       <Link to="/create">ADD STUDENT</Link>
-      <div>
+      <div className="container">
         <table>
           <thead>
             <th>NAME</th>

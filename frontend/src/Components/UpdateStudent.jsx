@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import './UpdateStudent.css'
 
 function UpdateStudent() {
   const [name, setName] = useState("");
@@ -13,7 +14,7 @@ function UpdateStudent() {
       .get("http://localhost:8004/getStudent/" + id)
       .then((res) => {
         console.log(res);
-        setName(res.data.name),
+          setName(res.data.name),
           setDepartment(res.data.department),
           setDob(res.data.dob);
       })
@@ -22,7 +23,11 @@ function UpdateStudent() {
   const handleUpdate = (e) => {
     e.preventDefault();
     axios
-      .put("http://localhost:8004/updateStudent/"+id, { name, department, dob })
+      .put("http://localhost:8004/updateStudent/" + id, {
+        name,
+        department,
+        dob,
+      })
       .then((res) => {
         console.log(res);
         navigate("/");
@@ -30,26 +35,29 @@ function UpdateStudent() {
       .catch((err) => console.log(err));
   };
   return (
-    <div>
+    <div className="main">
       <h2>UPDATE STUDENT</h2>
-      <div>
+      <div className="container">
         <label htmlFor="">Student Name</label>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required
         />
         <label htmlFor="">Department</label>
         <input
           type="text"
           value={department}
           onChange={(e) => setDepartment(e.target.value)}
+          required
         />
         <label htmlFor="">Date of Birth</label>
         <input
-          type="text"
+          type="date"
           value={dob}
           onChange={(e) => setDob(e.target.value)}
+          required
         />
         <button onClick={handleUpdate}>Update</button>
       </div>
